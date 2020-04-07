@@ -3,12 +3,15 @@
 library(ggplot2)
 library(reshape2)
 library(hrbrthemes)
-#library(ggthemr)
+library(ggthemr)
 library(Hmisc)
+library(gganimate)
+library(transformr)
+library(gifski)
 
 #if using ggthemr use this and remove all 'theme_ft_rc()' code
 #I found this necessary on some OSs as hrbrthemes has font and plotting issues
-# ggthemr('flat dark', type = 'outer')
+#ggthemr('flat dark', type = 'outer')
 
 #setwd("")
 
@@ -123,4 +126,18 @@ ggplot(data = co19_df, aes(log(T.Pos), log(New_Cases), group = '')) +
   geom_point(color = ft_cols$red) + 
   labs(y = "Log(New Cases)", y = "log(Total Cases)", title = "CoVID-19 in MN (Disease Curve Projection)") + 
   theme_ft_rc() + theme(axis.text.x = element_text(angle = 60, hjust =1))
+
+#animate that image
+#note will need to add theme if using hrbrthemes
+co19_df$Date <- as.Date(co19_df$Date)
+p <- ggplot(data = co19_df, aes(log(T.Pos), log(New_Cases), group = '')) + 
+  geom_line() + 
+  geom_point(color = ft_cols$red) + 
+  labs(y = "Log(New Cases)", y = "log(Total Cases)", title = "CoVID-19 in MN (Disease Curve Projection)") + 
+  theme(axis.text.x = element_text(angle = 60, hjust =1)) +
+  transition_reveal(Date)
+
+
+animate(p, duration = 10, fps = 20, width = 765, height = 489, renderer = gifski_renderer())
+anim_save("test_animation.gif")
 
