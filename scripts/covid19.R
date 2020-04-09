@@ -124,7 +124,7 @@ ggplot(data = co19_df, aes(Date, T.Pos/Tested, group = '')) +
 ggplot(data = co19_df, aes(log(T.Pos), log(New_Cases), group = '')) + 
   geom_line() + 
   geom_point(color = ft_cols$red) + 
-  labs(y = "Log(New Cases)", y = "log(Total Cases)", title = "CoVID-19 in MN (Disease Curve Projection)") + 
+  labs(x = "Log(Total Cases)", y = "log(New Cases)", title = "CoVID-19 in MN (Disease Curve Projection)") + 
   theme_ft_rc() + theme(axis.text.x = element_text(angle = 60, hjust =1))
 
 #animate that image
@@ -133,11 +133,12 @@ co19_df$Date <- as.Date(co19_df$Date)
 p <- ggplot(data = co19_df, aes(log(T.Pos), log(New_Cases), group = '')) + 
   geom_line() + 
   geom_point(color = ft_cols$red) + 
-  labs(y = "Log(New Cases)", y = "log(Total Cases)", title = "CoVID-19 in MN (Disease Curve Projection)") + 
+  labs(x = "Log(Total Cases)", y = "log(New Cases)", title = "CoVID-19 in MN (Disease Curve Projection)") + 
+  theme_ft_rc(axis_text_size = 14, axis_title_size = 15) + 
   theme(axis.text.x = element_text(angle = 60, hjust =1)) +
   transition_reveal(Date)
 
 
-animate(p, duration = 10, fps = 20, width = 765, height = 489, renderer = gifski_renderer())
-anim_save("test_animation.gif")
+animate(p, duration = 10, fps = 20, width = 1000, height = 675, renderer = gifski_renderer())
+anim_save("dc_proj_04-08_animated.gif")
 
