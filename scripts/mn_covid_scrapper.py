@@ -6,19 +6,19 @@ from bs4 import BeautifulSoup
 from csv import writer
 import csv
 
-#Note that MNDPH has been frequently altering their website.
-#It is possible that an update will cause errors here and the code
-#would need to be edited to address these changes
+# Note that MNDPH has been frequently altering their website.
+# It is possible that an update will cause errors here and the code
+# would need to be edited to address these changes
 
 URL = "https://www.health.state.mn.us/diseases/coronavirus/situation.html"
 
-headers = {"User-Agent": 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:73.0) Gecko/20100101 Firefox/73.0'}
+headers = {
+    "User-Agent": 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:73.0) Gecko/20100101 Firefox/73.0'}
 
-page = requests.get(URL, headers = headers)
+page = requests.get(URL, headers=headers)
 
 
-
-#testing html block
+# testing html block
 
 test_html = """
 <!doctype html>
@@ -27,7 +27,7 @@ test_html = """
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- JAVASCRIPT --> 
+<!-- JAVASCRIPT -->
 <script type="text/javascript" src="/macros/js/jquery.min.js"></script>
 <script type="text/javascript" src="/macros/js/bootstrap.js"></script>
 <script type="text/javascript" src="/macros/js/banner.js"></script>
@@ -53,7 +53,7 @@ function checkWidth() {
 <link rel="stylesheet" type="text/css" href="/macros/css/bootstrap/bootstrap.css" />
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="/macros/responsive/styles.css"> 
+<link rel="stylesheet" href="/macros/responsive/styles.css">
 <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 
@@ -63,10 +63,10 @@ function checkWidth() {
 <div id="skiptocontent"><a href="#body" class="skip">Skip to Content</a></div>
 <script>
    $( document ).ready(function() {
-        $(".skip").click(function(event){   
+        $(".skip").click(function(event){
             var skipTo="#"+this.href.split('#')[1];
             $(skipTo).attr('tabindex', -1).on('blur focusout', function () {
-                $(this).removeAttr('tabindex');    
+                $(this).removeAttr('tabindex');
             }).focus();
         });
     });
@@ -74,7 +74,7 @@ function checkWidth() {
 <!-- MDH CURRENT BANNER CONTENT --->
 <!-- Start Banner Include -->
 
-<!-- Specify MDH main phone numbers for Google Searches; added 3-14-15 --> 
+<!-- Specify MDH main phone numbers for Google Searches; added 3-14-15 -->
 <script type="application/ld+json">
 { "@context" : "http://schema.org",
   "@type" : "Organization",
@@ -96,10 +96,10 @@ function checkWidth() {
 <div id="mdhHeaderDiv">
   <header class="banner"> <a href="/index.html"><img class="bannerImg no_print" src="/images/logo-reverse.png" alt="Department of Health Logo"/></a>
     <img class="bannerImg-small hidden" src="/images/portal-logo-screen_tcm1077-226393.png" alt="Minnesota logo" /><img src="/images/logo_print.png" alt="MDH Logo" width="250" height="37" class="printOnly" />
-	
-	  
+
+
     <div class="title hidden" tabindex=0>Minnesota Department of Health</div>
-  
+
     <div id="navigation">
       <ul id="navbar" class="clearfix">
         <li><a href="/index.html" id="home">HOME</a></li>
@@ -120,20 +120,20 @@ function checkWidth() {
       <div id="searchbox">
         <label style="position: absolute; left:-1100px" for="q">search input field</label>
         <button type="submit" class="searchbutton"><span class="sr-only">Search</span> </button>
-        <input type="text" name="query" placeholder="Search" id="q" size="30" class="searchtext" value="" onfocus="return clearSearchDefault;" 
+        <input type="text" name="query" placeholder="Search" id="q" size="30" class="searchtext" value="" onfocus="return clearSearchDefault;"
          />
-			   
-        
+
+
       </div>
       </form>
-    </div>         
-  </div>	
+    </div>
+  </div>
   </header>
-	
+
 	</div>
-	
-	
-	
+
+
+
 <!--------------------------------------------------------------------------------------------->
 
 <!-- End Banner Include -->
@@ -265,7 +265,7 @@ function checkWidth() {
 3/31, 2, 12
 4/1, 5, 17
 4/2, 1, 18
-4/3, 4, 22		
+4/3, 4, 22
 "/>
 <h3>Hospitalization</h3>
 <ul>
@@ -295,7 +295,7 @@ function checkWidth() {
 3/31, 30, 26, 112, 32
 4/1, 27, 27, 122, 40
 4/2, 37, 38, 138, 49
-4/3, 46, 40, 156, 62		
+4/3, 46, 40, 156, 62
 "/></p>
 
 <h3>Demographics</h3>
@@ -402,7 +402,7 @@ function checkWidth() {
     <tr>
       <td>Beltrami</td>
       <td >4</td>
-    </tr>	  
+    </tr>
     <tr>
       <td>Benton</td>
       <td >1</td>
@@ -446,7 +446,7 @@ function checkWidth() {
     <tr>
       <td>Cottonwood</td>
       <td >5</td>
-    </tr>		  
+    </tr>
     <tr>
       <td>Crow Wing</td>
       <td >3</td>
@@ -462,11 +462,11 @@ function checkWidth() {
     <tr>
       <td>Douglas</td>
       <td >1</td>
-    </tr>		  
+    </tr>
     <tr>
       <td>Faribault</td>
       <td >3</td>
-    </tr>	  
+    </tr>
     <tr>
       <td>Fillmore</td>
       <td >9</td>
@@ -486,7 +486,7 @@ function checkWidth() {
     <tr>
       <td>Isanti</td>
       <td >2</td>
-    </tr>	  
+    </tr>
     <tr>
       <td>Itasca</td>
       <td >2</td>
@@ -494,7 +494,7 @@ function checkWidth() {
     <tr>
       <td>Jackson</td>
       <td >1</td>
-    </tr>		  
+    </tr>
     <tr>
       <td>Kandiyohi</td>
       <td >2</td>
@@ -514,7 +514,7 @@ function checkWidth() {
     <tr>
       <td>Lincoln</td>
       <td >1</td>
-    </tr>	  
+    </tr>
     <tr>
       <td>Lyon</td>
       <td >3</td>
@@ -546,7 +546,7 @@ function checkWidth() {
     <tr>
       <td>Otter Tail</td>
       <td >1</td>
-    </tr>	  
+    </tr>
     <tr>
       <td>Ramsey</td>
       <td >71</td>
@@ -680,12 +680,12 @@ function checkWidth() {
   <div id="sidebar_right">
 			<ul id="socialMedia">
 				<li class="addthis_toolbox addthis_default_style"><a href="http://www.addthis.com/bookmark.php?v=250&amp;pub=mnhealth" class="addthis_button share">Share This</a>
-				</li><br />				
+				</li><br />
 	  			<li class="addthis_toolbox addthis_default_style"><a href="javascript:window.open('http://service.govdelivery.com/service/subscribe.html?code=MNMDH_486', 'Popup','width=700,height=440,toolbar=no,scrollbars=yes,resizable=yes'); void('');" onClick="window.status='Subscribe'; return true" onMouseOver="window.status='Subscribe'; return true" onMouseOut="window.status=''; return true" class="email" alt="Subscribe Coronavirus Disease 2029 (COVID-19) Updates">Subscribe: COVID-19 updates</a> </li>
-			</ul>	
+			</ul>
 <!--Begin text area: you can modify -->
 	  <p><a href="/diseases/coronavirus/materials/hmong.html">2019 Novel Coronavirus</a>
-        <br>(Hmong) 
+        <br>(Hmong)
     <p><a href="/diseases/coronavirus/materials/somali.html">Koronafayraska Cusub ee 2019</a><br>
   (Somali)
 </p>
@@ -731,7 +731,7 @@ function checkWidth() {
                 <li><a href="/about/equalopp.html">Equal Opportunity</a>		</li>
 			</ul>
 		</div>
-      <div class="footerTopics"> 
+      <div class="footerTopics">
       <p>651-201-5000 Phone<br />
 				888-345-0823 Toll-free</p>
 			<p>Information on this website is available in alternative formats upon request. </p>
@@ -783,105 +783,126 @@ $(document).ready(function() {
 """
 
 #test = open("covid.html", 'r')
-#page = requests.get(test, headers = headers) 
-#print(test)
+#page = requests.get(test, headers = headers)
+# print(test)
 
-#when debugging replace page.text with html var above
+# when debugging replace page.text with html var above
 soup = BeautifulSoup(page.text, 'html.parser')
 
 #soup = BeautifulSoup(test_html, 'html.parser')
 
 #title = soup.find()
 
-#print(soup.prettify())
+# print(soup.prettify())
 #x = soup.find_all('li')[3].get_text()
 
-#print(x)
-
+# print(x)
 
 
 for item in soup.select('p'):
-	#get_text() converts html to str
-	if item.get_text().startswith("Updated") and item.get_text().endswith("CDT "):
-		web_timestamp = re.findall(r'\d+[-]\w+[-]\d+', item.get_text())
-		web_timestamp = web_timestamp[0]
-		#print(web_timestamp)	
-	if item.get_text().startswith("Total approximate number of completed tests:"):
-		#this does quite a bit basically grabs only the number, removes whitespace and commas, converts to int
-		tot_tested = int(item.get_text().split(":")[-1].strip().replace(',', ''))
-		#print(tot_tested)
+  # get_text() converts html to str
+  #Had to change the way I searched for date as website format was altered
+  #now I am using a regex  
+  if re.match(r'\w+day', item.get_text()) and item.get_text().endswith("CDT "):
+    web_timestamp = re.findall(r'\d+[-]\w+[-]\d+', item.get_text())
+    web_timestamp = web_timestamp[0]
+    print(web_timestamp)
+  if item.get_text().startswith("Total approximate number of completed tests:"):
+    # this does quite a bit basically grabs only the number, removes whitespace and commas, converts to int
+    #Had to add 'Â' as this is in the html now for some reason 
+    tot_tested = int(item.get_text().split(":Â")[-1].strip().replace(',', ''))
+    #print(tot_tested)
+  #Had to add these if statements when website was altered
+  if item.get_text().startswith("Total positive:"):
+        len_list = len(item.get_text().split(":"))
+        split_list = re.split(r'[:\n]\s*', item.get_text())
+        if len_list > 2:
+            del split_list[-1]
+        tot_pos = split_list[1].strip().replace(',', '')
+        #print("positive: " + tot_pos)
+  if item.get_text().startswith("Deaths:"):
+        len_list = len(item.get_text().split(":"))
+        split_list = re.split(r'[:\n]\s*', item.get_text())
+        if len_list > 2:
+            del split_list[-1]
+        deaths = split_list[1].strip().replace(',', '')
 
+
+for item in soup.select('strong'):
+      if item.get_text().startswith("Total cases requiring hospitalization:"):
+        #Handling seperated text with multiple dif whitespace
+        tot_hosp = item.next_sibling
+        tot_hosp = "".join(tot_hosp.split())
+        #print("hospitilized: " + tot_hosp)
 
 
 for item in soup.select('li'):
-	#These if statements needed more logic due to the html format
-	if item.get_text().startswith("Total positive:"):
-		len_list = len(item.get_text().split(":"))
-		split_list = re.split(r'[:\n]\s*', item.get_text())
-		if len_list > 2:
-			del split_list[-1]
-		tot_pos = split_list[1].strip().replace(',', '')
-		#print(tot_pos)
-	if item.get_text().startswith("Total deaths:"):
-		len_list = len(item.get_text().split(":"))
-		split_list = re.split(r'[:\n]\s*', item.get_text())
-		if len_list > 2:
-			del split_list[-1]
-		deaths = split_list[1].strip().replace(',', '')
-		#print(deaths)
-	if item.get_text().startswith("Patients who no longer need to be isolated:"):
-		len_list = len(item.get_text().split(":"))
-		split_list = re.split(r'[:\n]\s*', item.get_text())
-		if len_list > 2:
-			del split_list[-1]
-		recovered = split_list[1].strip().replace(',', '')
-		#print("recovered = " + str(recovered))
-	if item.get_text().startswith("Total cases requiring hospitalization:"):
-		len_list = len(item.get_text().split(":"))
-		split_list = re.split(r'[:\n]\s*', item.get_text())
-		if len_list > 2:
-			del split_list[-1]
-		tot_hosp = split_list[1].strip().replace(',', '')
-		#print(tot_hosp)
-	if item.get_text().startswith("Hospitalized as of today:"):
-		len_list = len(item.get_text().split(":"))
-		split_list = re.split(r'[:\n]\s*', item.get_text())
-		if len_list > 2:
-			del split_list[-1]
-		curr_hosp = split_list[1].strip().replace(',', '')
-		#print(curr_hosp)
-	if item.get_text().startswith("Hospitalized in ICU as of today:"):
-		len_list = len(item.get_text().split(":"))
-		split_list = re.split(r'[:\n]\s*', item.get_text())
-		if len_list > 2:
-			del split_list[-1]
-		ICU = split_list[1].strip().replace(',', '')
-		#print(ICU)
+       # These if statements needed more logic due to the html format
+    if item.get_text().startswith("Total positive:"):
+        len_list = len(item.get_text().split(":"))
+        split_list = re.split(r'[:\n]\s*', item.get_text())
+        if len_list > 2:
+            del split_list[-1]
+        tot_pos = split_list[1].strip().replace(',', '')
+        # print(tot_pos)
+    if item.get_text().startswith("Deaths:"):
+        len_list = len(item.get_text().split(":"))
+        split_list = re.split(r'[:\n]\s*', item.get_text())
+        if len_list > 2:
+            del split_list[-1]
+        deaths = split_list[1].strip().replace(',', '')
+        #print("deaths: " + deaths)
+    if item.get_text().startswith("Patients no longer needing isolation:"):
+        len_list = len(item.get_text().split(":"))
+        split_list = re.split(r'[:\n]\s*', item.get_text())
+        if len_list > 2:
+            del split_list[-1]
+        recovered = split_list[1].strip().replace(',', '')
+        #print("recovered = " + str(recovered))
+    if item.get_text().startswith("Total cases requiring hospitalization:"):
+        len_list = len(item.get_text().split(":"))
+        split_list = re.split(r'[:\n]\s*', item.get_text())
+        if len_list > 2:
+            del split_list[-1]
+        tot_hosp = split_list[1].strip().replace(',', '')
+        # print(tot_hosp)
+    if item.get_text().startswith("Hospitalized as of today:"):
+        len_list = len(item.get_text().split(":"))
+        split_list = re.split(r'[:\n]\s*', item.get_text())
+        if len_list > 2:
+            del split_list[-1]
+        curr_hosp = split_list[1].strip().replace(',', '')
+        # print(curr_hosp)
+    if item.get_text().startswith("Hospitalized in ICU as of today:"):
+        len_list = len(item.get_text().split(":"))
+        split_list = re.split(r'[:\n]\s*', item.get_text())
+        if len_list > 2:
+            del split_list[-1]
+        ICU = split_list[1].strip().replace(',', '')
+        # print(ICU)
 
 curr_date = (str(datetime.today())[0:10])
 web_data_date = datetime.strptime(web_timestamp, '%d-%b-%Y').strftime('%Y-%m-%d')
-#print(web_data_date)
-#need logic gate to check date before running program
+# print(web_data_date)
+# need logic gate to check date before running program
 
-#collect last recorded timepoint
+# collect last recorded timepoint
 with open('mn_covid_19.txt', 'r') as csv_file:
-	reader = csv.reader(csv_file, delimiter = '\t')
-	rows = list(reader)
-	last_row = rows[-1]
-	last_rec_data = last_row[0]
-	#print(last_rec_data)
+    reader = csv.reader(csv_file, delimiter= '\t')
+    rows = list(reader)
+    last_row = rows[-1]
+    last_rec_data = last_row[0]
+    # print(last_rec_data)
 
-#logic for data collection and user msgs
+# logic for data collection and user msgs
 if curr_date == web_data_date and curr_date != last_rec_data and web_data_date != last_rec_data:
-	with open('mn_covid_19.txt', 'a') as csv_file:
-		#csv_file.write('\n')
-		csv_writer = writer(csv_file, delimiter='\t')
-		csv_writer.writerow([curr_date, tot_tested, tot_pos, deaths, tot_hosp, curr_hosp, recovered, ICU])
-	print("Data collected on " + web_data_date +" has been appended to mn_covid_19.txt")
+    with open('mn_covid_19.txt', 'a') as csv_file:
+        # csv_file.write('\n')
+        csv_writer = writer(csv_file, delimiter='\t')
+        csv_writer.writerow([curr_date, tot_tested, tot_pos, deaths, tot_hosp, curr_hosp, recovered, ICU])
+    print("Data collected on " + web_data_date + " has been appended to mn_covid_19.txt")
 elif curr_date != web_data_date and last_rec_data == web_data_date:
-	print("MNDPH has not updated their data or an error has occurred.  Check website to ensure this is not due to html formatting changes.")
+    print("MNDPH has not updated their data or an error has occurred.  Check website to ensure this is not due to html formatting changes.")
 elif curr_date == web_data_date and last_rec_data == web_data_date:
-	print("Minnesota CoVID-19 data is up to date.")
+    print("Minnesota CoVID-19 data is up to date.")
 #print(curr_date, web_data_date, last_rec_data)
-
-
