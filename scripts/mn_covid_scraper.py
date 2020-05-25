@@ -798,11 +798,22 @@ soup = BeautifulSoup(page.text, 'html.parser')
 
 # print(x)
 
+#Added this code as the website was not updating its webpage timestamp.
+for item in soup.find_all('p', class_='small'):
+  #if item.get_text().startswith("\nUpdated"):
+  #  print(item)
+  if re.match(r'\s+Updated', item.get_text()):
+    last_update = re.split(r'\n', item.get_text())
+    #exctract date element and remove 'Updated' with slicing, remove trailing \r for datetime processing
+    last_update = last_update[1][8:].rstrip() 
+    last_update = datetime.strptime(last_update, '%B %d, %Y').strftime('%Y-%m-%d')
+    #print(last_update)
 
 for item in soup.select('p'):
   # get_text() converts html to str
   #Had to change the way I searched for date as website format was altered
   #now I am using a regex  
+  #print(item.get_text())
   if re.match(r'\w+day', item.get_text()) and item.get_text().endswith("CDT "):
     web_timestamp = re.findall(r'\d+[-]\w+[-]\d+', item.get_text())
     web_timestamp = web_timestamp[0]
@@ -836,9 +847,10 @@ for item in soup.select('strong'):
         #print("hospitilized: " + tot_hosp)
 
 
+
 for item in soup.select('li'):
        # These if statements needed more logic due to the html format
-    if item.get_text().startswith("Total positive:"):
+    if item.get_text().startswith("Total positive cases:"):
         len_list = len(item.get_text().split(":"))
         split_list = re.split(r'[:\n]\s*', item.get_text())
         if len_list > 2:
@@ -894,13 +906,28 @@ with open('mn_covid_19.txt', 'r') as csv_file:
     last_rec_data = last_row[0]
     # print(last_rec_data)
 
+ouput_check = False #binary option for where update time is coming from
 # logic for data collection and user msgs
 if curr_date == web_data_date and curr_date != last_rec_data and web_data_date != last_rec_data:
     with open('mn_covid_19.txt', 'a') as csv_file:
         # csv_file.write('\n')
         csv_writer = writer(csv_file, delimiter='\t')
         csv_writer.writerow([curr_date, tot_tested, tot_pos, deaths, tot_hosp, curr_hosp, recovered, ICU])
+        output_check = True
     print("Data collected on " + web_data_date + " has been appended to mn_covid_19.txt")
+elif curr_date == last_update and curr_date != last_rec_data and last_update != last_rec_data and ouput_check == False:
+    with open('mn_covid_19.txt', 'a') as csv_file:
+        # csv_file.write('\n')
+        csv_writer = writer(csv_file, delimiter='\t')
+        csv_writer.writerow([curr_date, tot_tested, tot_pos, deaths, tot_hosp, curr_hosp, recovered, ICU])
+        output_check = True
+    print("Data collected on " + last_update + " has been appended to mn_covid_19.txt")
+elif web_data_date < curr_date and curr_date > last_rec_data and web_data_date > last_rec_data:
+    with open('mn_covid_19.txt', 'a') as csv_file:
+      # csv_file.write('\n')
+      csv_writer = writer(csv_file, delimiter='\t')
+      csv_writer.writerow([web_data_date, tot_tested, tot_pos, deaths, tot_hosp, curr_hosp, recovered, ICU])
+    print("Data collected on " + web_data_date + " has been appended to mn_covid_19.txt")  
 elif curr_date != web_data_date and last_rec_data == web_data_date:
     print("MNDPH has not updated their data or an error has occurred.  Check website to ensure this is not due to html formatting changes.")
 elif curr_date == web_data_date and last_rec_data == web_data_date:
