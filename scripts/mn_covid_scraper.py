@@ -800,14 +800,20 @@ soup = BeautifulSoup(page.text, 'html.parser')
 
 #Added this code as the website was not updating its webpage timestamp.
 for item in soup.find_all('p', class_='small'):
-  #if item.get_text().startswith("\nUpdated"):
-  #  print(item)
-  if re.match(r'\s+Updated', item.get_text()):
+  #print(item.get_text())
+  #These two if statements take html format without and without whitespace in beginning of capture phrase
+  if item.get_text().startswith("Updated"):
+    #test = re.match(r'Updated.*2020', item.get_text())
+    last_update = re.split(r'\n', item.get_text())
+    last_update = (last_update[0][8:].rstrip()) 
+    last_update = datetime.strptime(last_update, '%B %d, %Y').strftime('%Y-%m-%d')
+    print(last_update)
+  elif re.match(r'\s+Updated', item.get_text()):
     last_update = re.split(r'\n', item.get_text())
     #exctract date element and remove 'Updated' with slicing, remove trailing \r for datetime processing
     last_update = last_update[1][8:].rstrip() 
     last_update = datetime.strptime(last_update, '%B %d, %Y').strftime('%Y-%m-%d')
-    #print(last_update)
+    print(last_update)
 
 for item in soup.select('p'):
   # get_text() converts html to str
