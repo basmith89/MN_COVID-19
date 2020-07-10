@@ -851,6 +851,10 @@ for item in soup.select('strong'):
         tot_hosp = item.next_sibling
         tot_hosp = "".join(tot_hosp.split())
         #print("hospitilized: " + tot_hosp)
+      #added this line because the webpage changed the lookup text
+      elif item.get_text().startswith("Total cases hospitalized:"):
+        tot_hosp = item.next_sibling
+        tot_hosp = "".join(tot_hosp.split())
 
 
 
