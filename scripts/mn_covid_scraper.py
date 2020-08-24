@@ -860,6 +860,7 @@ for item in soup.select('strong'):
 
 for item in soup.select('li'):
        # These if statements needed more logic due to the html format
+    #print(item)
     if item.get_text().startswith("Total positive cases:"):
         len_list = len(item.get_text().split(":"))
         split_list = re.split(r'[:\n]\s*', item.get_text())
@@ -888,14 +889,14 @@ for item in soup.select('li'):
             del split_list[-1]
         tot_hosp = split_list[1].strip().replace(',', '')
         # print(tot_hosp)
-    if item.get_text().startswith("Hospitalized as of today:"):
+    if item.get_text().startswith("Hospitalized as of today*:"):
         len_list = len(item.get_text().split(":"))
         split_list = re.split(r'[:\n]\s*', item.get_text())
         if len_list > 2:
             del split_list[-1]
         curr_hosp = split_list[1].strip().replace(',', '')
         # print(curr_hosp)
-    if item.get_text().startswith("Hospitalized in ICU as of today:"):
+    if item.get_text().startswith("Hospitalized in ICU as of today*:"):
         len_list = len(item.get_text().split(":"))
         split_list = re.split(r'[:\n]\s*', item.get_text())
         if len_list > 2:
